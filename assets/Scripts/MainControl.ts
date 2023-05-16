@@ -156,6 +156,7 @@ export class MainControl extends Component {
         //Score
         this.curScore = 0;
         this.scoreLabel.string = this.curScore.toString();
+        this.scoreLabel.node.setPosition(0,175,0)
     }
 
     gameOver(){

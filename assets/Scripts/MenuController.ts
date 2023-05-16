@@ -9,8 +9,10 @@ export class MenuController extends Component {
     private audioSource: AudioSource
 
     onLoad() {
-        let param = find("Sound");
-        console.log(param.getComponent(Button));
+        // let canvas = director.getScene().getChildByName('Canvas')
+        // let param = canvas.getChildByName("Sound")
+        // console.log(param)
+        console.log(this.audioSource)
     }
 
     onClickPlayBtn() {
@@ -18,9 +20,26 @@ export class MenuController extends Component {
     }
 
     onClickSoundOn() {
-        this.node.getChildByName("Sound").active = false
-        this.node.getChildByName("Mute").active = true
-        this.audioSource.play()
+        let canvas = director.getScene().getChildByName('Canvas')
+        canvas.getChildByName("Sound").active = false
+        canvas.getChildByName("Mute").active = true
+        // this.audioSource.node.on(AudioSource.EventType.STARTED, this.onAudioStarted, this);
+        
+    }
+
+    onClickMute() {
+        let canvas = director.getScene().getChildByName('Canvas')
+        canvas.getChildByName("Sound").active = true
+        canvas.getChildByName("Mute").active = false
+        // this.audioSource.node.on(AudioSource.EventType.ENDED, this.onAudioEnd, this);
+    }
+
+    onAudioStarted() {
+
+    }
+
+    onAudioEnd() {
+        
     }
 }
 
