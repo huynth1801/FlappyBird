@@ -9,29 +9,38 @@ export class MenuController extends Component {
     private audioSource: AudioSource
 
     onLoad() {
-        // let canvas = director.getScene().getChildByName('Canvas')
+        let canvas = director.getScene().getChildByName('Canvas')
         // let param = canvas.getChildByName("Sound")
+        // param.active = false
         // console.log(param)
-        console.log(this.audioSource)
+        // console.log(this.audioSource)
+        // this.audioSource.node.on(AudioSource.EventType.ENDED, this.onAudioStarted, this);
+        canvas.getChildByName("AudioSource").getComponent(AudioSource).enabled = true
     }
 
     onClickPlayBtn() {
         director.loadScene("Main")     
     }
 
-    onClickSoundOn() {
-        let canvas = director.getScene().getChildByName('Canvas')
-        canvas.getChildByName("Sound").active = false
-        canvas.getChildByName("Mute").active = true
-        // this.audioSource.node.on(AudioSource.EventType.STARTED, this.onAudioStarted, this);
-        
-    }
 
-    onClickMute() {
+    // Nhan vao de tat am va hien ra nut mute
+    onClickSoundOn() {
         let canvas = director.getScene().getChildByName('Canvas')
         canvas.getChildByName("Sound").active = true
         canvas.getChildByName("Mute").active = false
-        // this.audioSource.node.on(AudioSource.EventType.ENDED, this.onAudioEnd, this);
+        canvas.getChildByName("AudioSource").getComponent(AudioSource).enabled = true
+        // this.audioSource.node.on(AudioSource.EventType.ENDED, this.onAudioStarted, this);
+        
+    }
+
+    // Nhan vao de bat am va hien ra nut sound
+    onClickMute() {
+        let canvas = director.getScene().getChildByName('Canvas')
+        canvas.getChildByName("Sound").active = false
+        canvas.getChildByName("Mute").active = true
+        canvas.getChildByName("AudioSource").getComponent(AudioSource).enabled = false
+        // console.log("Clicked")
+        // this.audioSource.node.on(AudioSource.EventType.STARTED, this.onAudioEnd, this);
     }
 
     onAudioStarted() {
