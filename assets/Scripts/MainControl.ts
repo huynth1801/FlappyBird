@@ -1,6 +1,8 @@
-import { _decorator, Component, Node, Sprite, Vec2, Vec3, Prefab, instantiate, math, director, PhysicsSystem2D, EPhysics2DDrawFlags, Button, Input, Label, sys } from 'cc';
+import { _decorator, Component, Node, Sprite, Vec2, Vec3, Prefab, instantiate, math, director, PhysicsSystem2D, EPhysics2DDrawFlags, Button, Input, Label, sys, Canvas, Animation, animation, find } from 'cc';
 import { BirdControl } from './BirdControl';
 import { SoundManager, SoundType } from './SoundManager';
+import { MenuController } from './MenuController';
+import { Store } from './Store';
 const { ccclass, property } = _decorator;
 
 export enum GameStatus{
@@ -13,13 +15,16 @@ export enum GameStatus{
 export class MainControl extends Component {
     @property(Sprite)
     private spBg: Sprite[] = [null, null];
+
     @property(Sprite)
     private spGround: Sprite[] = [null, null];
 
     @property(Prefab)
     private pipePrefab: Prefab = null;
+
     @property(Node)
     private gameOverPanel: Node = null;
+
     @property(Button)
     private btnReset: Button = null;
 
@@ -38,13 +43,14 @@ export class MainControl extends Component {
     @property(SoundManager)
     public soundManager: SoundManager = null;
 
+
     private curScore: number = 0;
     private maxScore: number = 0;
     private localScore: number = 0;
     public birdControl : BirdControl = null;
 
     onLoad(){
-        this.localScore = parseInt(sys.localStorage.getItem("Highest score"));
+        this.localScore = parseInt(sys.localStorage.getItem('Highest score'));
         this.gameOverPanel.active = false;
         this.btnReset.node.on(Input.EventType.TOUCH_END, this.onBtnResetClicked, this);
         this.btnStart.node.on(Input.EventType.TOUCH_END, this.onBtnStartClicked, this);
@@ -53,7 +59,19 @@ export class MainControl extends Component {
         this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
         this.birdControl.node.active = false;
         this.highScore.active = false
+        this.node.getChildByName('BackToMenu').active = false
+        // let params = find('StoreVolume')
+        // console.log(params.getComponent(Store).stored)
+        let param = find('StoreVolume').getComponent(Store).stored
+        if (param == 0) {
+            this.soundManager.audioSource.volume = 0
+            console.log("0");
+        } else {
+            this.soundManager.audioSource.volume = 1
+        }
     }
+
+
 
     start() {
         for(let i = 0; i < this.arrPipe.length; i++){
@@ -66,7 +84,6 @@ export class MainControl extends Component {
             xPipe = 170 + 200 * i;
             yPipe = minY + Math.random() * (maxY - minY);
             this.arrPipe[i].setPosition(new Vec3(xPipe, yPipe, 0));
-            // this.arrPipe[i].setPosition(new Vec3(170 + 220 * i, minY + math.random() * maxY - minY, 0));
         }
     }
 
@@ -86,6 +103,7 @@ export class MainControl extends Component {
             this.spBg[i].node.setPosition(newPos);
         }
 
+        // move the ground node
         for(let i = 0; i < this.spGround.length; i++){
             let newPos = this.spGround[i].node.getPosition();
             newPos.x -= 1.0;
@@ -96,6 +114,7 @@ export class MainControl extends Component {
             this.spGround[i].node.setPosition(newPos);
         }
 
+        // move the pipe node
         for(let i = 0; i < this.arrPipe.length; i++){
             let newPos = this.arrPipe[i].getPosition();
             newPos.x -= 1.0;
@@ -173,16 +192,21 @@ export class MainControl extends Component {
         this.btnReset.node.active = true;
         this.gameStatus = GameStatus.GameOver;
         this.soundManager.playSound(SoundType.Die);
+        this.node.getChildByName('BackToMenu').active = true
         this.showResults()
     }
 
     showResults() {
         this.highScore.active = true
         this.maxScore = Math.max(this.localScore, this.curScore)
-        sys.localStorage.setItem("Highest score" , JSON.stringify(this.maxScore));
-        this.localScore = parseInt(sys.localStorage.getItem("Highest score"));
-        this.node.getChildByName("HighScore").getComponentInChildren(Label).string = this.maxScore.toString();
+        sys.localStorage.setItem('Highest score' , JSON.stringify(this.maxScore));
+        this.localScore = parseInt(sys.localStorage.getItem('Highest score'));
+        this.node.getChildByName('HighScore').getComponentInChildren(Label).string = this.maxScore.toString();
         this.scoreLabel.node.setPosition(0,-100,0)
+    }
+
+    backToMenu() {
+        director.loadScene('Menu')
     }
 }
 

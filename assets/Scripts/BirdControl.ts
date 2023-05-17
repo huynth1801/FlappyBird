@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3, Event, EventTouch, EventKeyboard, input, Input, KeyCode, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D } from 'cc';
+import { _decorator, Component, Node, Vec3, find, Event, EventTouch, EventKeyboard, input, Input, KeyCode, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D } from 'cc';
 import { SoundType } from './SoundManager';
 import { GameStatus, MainControl } from './MainControl';
 const { ccclass, property } = _decorator;

@@ -2,60 +2,60 @@ import { _decorator, Component, director, Node, Button, AudioSource, find} from 
 const { ccclass, property } = _decorator;
 import { SoundManager } from './SoundManager';
 import { MainControl } from './MainControl';
+import { Store } from './Store';
 
 @ccclass('MenuController')
 export class MenuController extends Component {
+    @property({type: Node})
+    private StoreVolume: Node;
 
     private audioSource: AudioSource
-    public soundManager: SoundManager
+    // @property(SoundManager)
+    // public soundManager: SoundManager = null;
+
+    public yellowBird: Node
+    public blueBird: Node
 
     onLoad() {
         let canvas = director.getScene().getChildByName('Canvas')
-        // let param = canvas.getChildByName("Sound")
-        // param.active = false
-        // console.log(param)
-        // console.log(this.audioSource)
-        // this.audioSource.node.on(AudioSource.EventType.ENDED, this.onAudioStarted, this);
         canvas.getChildByName("AudioSource").getComponent(AudioSource).enabled = true
     }
 
     onClickPlayBtn() {
-        director.loadScene("Main")     
+        director.addPersistRootNode(this.StoreVolume);
+        director.loadScene("Main")
     }
 
 
-    // Nhan vao de tat am va hien ra nut mute
+    // Click to unmute
     onClickSoundOn() {
         let canvas = director.getScene().getChildByName('Canvas')
-        canvas.getChildByName("Sound").active = true
-        canvas.getChildByName("Mute").active = false
-        canvas.getChildByName("AudioSource").getComponent(AudioSource).enabled = true
-        // this.audioSource.node.on(AudioSource.EventType.ENDED, this.onAudioStarted, this);
-        
-    }
+        canvas.getChildByName('Sound').active = true
+        canvas.getChildByName('Mute').active = false
+        canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = true
+        this.StoreVolume.getComponent(Store).stored = 1
+    }   
 
-    // Nhan vao de bat am va hien ra nut sound
+    // Click to mute and show mute button
     onClickMute() {
         let canvas = director.getScene().getChildByName('Canvas')
-        canvas.getChildByName("Sound").active = false
-        canvas.getChildByName("Mute").active = true
-        canvas.getChildByName("AudioSource").getComponent(AudioSource).enabled = false
-        let audio = canvas.getChildByName("AudioSource").getComponent(SoundManager)
-        // audio.destroy()
-        // audio.enabled = true
-        console.log(audio)
-        // director.getScene().addChild(audio);
-        // director.addPersistRootNode(audio);
-        // console.log("Clicked")
-        // this.audioSource.node.on(AudioSource.EventType.STARTED, this.onAudioEnd, this);
+        canvas.getChildByName('Sound').active = false
+        canvas.getChildByName('Mute').active = true
+        canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = false
+        this.StoreVolume.getComponent(Store).stored = 0
     }
 
-    onAudioStarted() {
 
+    chooseYellowBird() {
+        director.addPersistRootNode(this.yellowBird)
     }
 
-    onAudioEnd() {
-        
+    chooseBlueBird() {
+        director.addPersistRootNode(this.blueBird)
+    }
+
+    chooseRedBird() {
+
     }
 }
 

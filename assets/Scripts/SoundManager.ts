@@ -43,21 +43,14 @@ export class SoundManager extends Component {
         }
     }
 
-    muteSound(soundType: SoundType){
-        switch(soundType){
-            case SoundType.Fly:
-                this.audioSource.playOneShot(this.flySound, 0);
-                break;
-            case SoundType.Score:
-                this.audioSource.playOneShot(this.scoreSound, 0);
-                break;
-            case SoundType.Die:
-                this.audioSource.playOneShot(this.dieSound, 0);
-                break;
-            case SoundType.Hit:
-                this.audioSource.playOneShot(this.hitSound, 0);
-                break;
-        }
+    unMute() {
+        this.audioSource.volume = 1
     }
+
+    mute(){
+        this.audioSource.volume = 0
+    }
+
+
 }
 
