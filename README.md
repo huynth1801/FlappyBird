@@ -2,6 +2,5 @@
 
 ## Missing:
 
-- Mute/Unmute sound on menu settings
-- UI Transform
+- UI Widget
 - Choose color of the bird
