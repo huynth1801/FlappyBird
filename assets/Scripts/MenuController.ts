@@ -9,7 +9,7 @@ export class MenuController extends Component {
     @property({type: Node})
     private StoreVolume: Node;
 
-    private audioSource: AudioSource
+    // private audioSource: AudioSource
     // @property(SoundManager)
     // public soundManager: SoundManager = null;
 
@@ -27,22 +27,22 @@ export class MenuController extends Component {
     }
 
 
-    // Click to unmute
+    // Click to unmute 1
     onClickSoundOn() {
         let canvas = director.getScene().getChildByName('Canvas')
         canvas.getChildByName('Sound').active = true
         canvas.getChildByName('Mute').active = false
         canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = true
-        this.StoreVolume.getComponent(Store).stored = 1
+        this.StoreVolume.getComponent(Store).setValue(1)
     }   
 
-    // Click to mute and show mute button
+    // Click to mute and show mute button 0
     onClickMute() {
         let canvas = director.getScene().getChildByName('Canvas')
         canvas.getChildByName('Sound').active = false
         canvas.getChildByName('Mute').active = true
         canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = false
-        this.StoreVolume.getComponent(Store).stored = 0
+        this.StoreVolume.getComponent(Store).setValue(0)
     }
 
 

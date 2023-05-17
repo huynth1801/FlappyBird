@@ -7,10 +7,14 @@ export class Store extends Component {
     @property({
         type: Number
     })
-    public stored: number = 1
+    private stored: number = 1
 
-    protected start(): void {
-        
+    getValue() {
+        return this.stored
+    }
+
+    setValue(newValue: number) {
+        this.stored = newValue;
     }
 }
 
