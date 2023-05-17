@@ -13,7 +13,7 @@ export class SoundManager extends Component {
     @property(AudioSource)
      public audioSource: AudioSource = null!
 
-    // sound effect when bird flying
+    // Hieu ung am thanh khi con chim bay
     @property({type: AudioClip})
     flySound: AudioClip = null;
 
@@ -39,6 +39,23 @@ export class SoundManager extends Component {
                 break;
             case SoundType.Hit:
                 this.audioSource.playOneShot(this.hitSound, 1);
+                break;
+        }
+    }
+
+    muteSound(soundType: SoundType){
+        switch(soundType){
+            case SoundType.Fly:
+                this.audioSource.playOneShot(this.flySound, 0);
+                break;
+            case SoundType.Score:
+                this.audioSource.playOneShot(this.scoreSound, 0);
+                break;
+            case SoundType.Die:
+                this.audioSource.playOneShot(this.dieSound, 0);
+                break;
+            case SoundType.Hit:
+                this.audioSource.playOneShot(this.hitSound, 0);
                 break;
         }
     }

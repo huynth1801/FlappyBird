@@ -1,15 +1,15 @@
 import { _decorator, Component, Node, Vec3, Event, EventTouch, EventKeyboard, input, Input, KeyCode, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D } from 'cc';
-import { GameStatus, MainControl } from './MainControl';
 import { SoundType } from './SoundManager';
+import { GameStatus, MainControl } from './MainControl';
 const { ccclass, property } = _decorator;
 
 @ccclass('BirdControl')
 export class BirdControl extends Component {
 
-    speed:number = 0;
+    private speed:number = 0;
 
     @property(MainControl)
-    mainControl: MainControl = null;
+    public mainControl: MainControl = null;
 
     onLoad(){
         input.on(Input.EventType.KEY_DOWN, this.onKeyBoardUp, this);

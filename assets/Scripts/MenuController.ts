@@ -7,6 +7,7 @@ import { MainControl } from './MainControl';
 export class MenuController extends Component {
 
     private audioSource: AudioSource
+    public soundManager: SoundManager
 
     onLoad() {
         let canvas = director.getScene().getChildByName('Canvas')
@@ -39,6 +40,12 @@ export class MenuController extends Component {
         canvas.getChildByName("Sound").active = false
         canvas.getChildByName("Mute").active = true
         canvas.getChildByName("AudioSource").getComponent(AudioSource).enabled = false
+        let audio = canvas.getChildByName("AudioSource").getComponent(SoundManager)
+        // audio.destroy()
+        // audio.enabled = true
+        console.log(audio)
+        // director.getScene().addChild(audio);
+        // director.addPersistRootNode(audio);
         // console.log("Clicked")
         // this.audioSource.node.on(AudioSource.EventType.STARTED, this.onAudioEnd, this);
     }
