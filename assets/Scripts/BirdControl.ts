@@ -9,7 +9,7 @@ export class BirdControl extends Component {
     private speed:number = 0;
 
     @property(MainControl)
-    public mainControl: MainControl = null;
+    private mainControl: MainControl = null;
 
     onLoad(){
         input.on(Input.EventType.KEY_DOWN, this.onKeyBoardUp, this);

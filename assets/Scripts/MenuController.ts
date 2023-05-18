@@ -6,15 +6,27 @@ import { Store } from './Store';
 
 @ccclass('MenuController')
 export class MenuController extends Component {
-    @property({type: Node})
+    @property({
+        type: Node
+    })
     private StoreVolume: Node;
 
     // private audioSource: AudioSource
     // @property(SoundManager)
     // public soundManager: SoundManager = null;
 
-    public yellowBird: Node
-    public blueBird: Node
+    @property({
+        type : Node
+    })
+    private yellowBird: Node
+    @property({
+        type : Node
+    })
+    private blueBird: Node
+    @property({
+        type : Node
+    })
+    private redBird: Node
 
     onLoad() {
         let canvas = director.getScene().getChildByName('Canvas')
@@ -22,6 +34,9 @@ export class MenuController extends Component {
     }
 
     onClickPlayBtn() {
+        this.chooseBlueBird()
+        this.chooseYellowBird()
+        this.chooseRedBird()
         director.addPersistRootNode(this.StoreVolume);
         director.loadScene("Main")
     }
@@ -55,7 +70,7 @@ export class MenuController extends Component {
     }
 
     chooseRedBird() {
-
+        director.addPersistRootNode(this.redBird)
     }
 }
 

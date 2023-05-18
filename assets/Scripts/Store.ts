@@ -1,13 +1,13 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, CCInteger, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 import { MenuController } from './MenuController';
 
 @ccclass('Store')
 export class Store extends Component {
     @property({
-        type: Number
+        type: CCInteger
     })
-    private stored: number = 1
+    private stored = 1
 
     getValue() {
         return this.stored
