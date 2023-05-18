@@ -7,4 +7,5 @@
 
 ## Missing:
 
+- Bugs on yellow bird
 - UI Widget

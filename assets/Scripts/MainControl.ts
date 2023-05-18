@@ -66,7 +66,10 @@ export class MainControl extends Component {
         console.log(param)
         this.soundManager.audioSource.volume = param.valueOf();
 
-        // let yellow = find('StoreVolume').getComponent(Store).getYellow()
+        let yellow = find('StoreVolume').getComponent(Store).getYellow()
+
+
+
         let blue = find('StoreVolume').getComponent(Store).getBlue()
         this.node.getChildByName('Bird').active = !blue
         // this.node.getChildByName('BlueBird').active = blue.valueOf()
@@ -152,6 +155,12 @@ export class MainControl extends Component {
 
         //Reset angle and position of the bird
         // this.birdControl.node.active = true;
+        let yellow = find('StoreVolume').getComponent(Store).getYellow()
+        if (yellow) {
+            this.node.getChildByName('Bird').active = true;
+            this.node.getChildByName('Bird').getComponent(BirdControl).node.active = yellow.valueOf()
+        }
+
         let blue = find('StoreVolume').getComponent(Store).getBlue()
         this.node.getChildByName('Bird').active = !blue
         this.node.getChildByName('Bird').getComponent(BirdControl).node.active = !blue
