@@ -69,33 +69,14 @@ export class MainControl extends Component {
         // let yellow = find('StoreVolume').getComponent(Store).getYellow()
         let blue = find('StoreVolume').getComponent(Store).getBlue()
         this.node.getChildByName('Bird').active = !blue
-        this.node.getChildByName('BlueBird').active = blue.valueOf()
-        console.log(blue);
+        // this.node.getChildByName('BlueBird').active = blue.valueOf()
+        this.node.getChildByName('BlueBird').active = !blue
+
+
         let red = find('StoreVolume').getComponent(Store).getRed()
         this.node.getChildByName('Bird').active = !red
         this.node.getChildByName('RedBird').active = red.valueOf()
-        console.log(red);
-
-
-        // if (blue) {
-        //     this.node.getChildByName('Bird').active = false
-        //     this.node.getChildByName('BlueBird').active = true
-        //     this.node.getChildByName('Bird').getComponent(Animation).play('blueBirdAnim')
-        // } else if (red) {
-        //     this.node.getChildByName('Bird').active = false
-        //     this.node.getChildByName('RedBird').active = true
-        //     this.node.getChildByName('Bird').getComponent(Animation).play('redBirdAnim')
-        //     console.log('run');
-        // }
-
-    }
-
-    loadAssests() {
-        // const url = 'test_assets/test_atlas/content/spriteFrame';
-        // resources.load(url, SpriteFrame, (err: any, spriteFrame) => {
-        //   const sprite = this.getComponent(Sprite);
-        //   sprite.spriteFrame = spriteFrame;
-        // });
+        // this.node.getChildByName('RedBird').active = !red
     }
 
 
@@ -170,7 +151,17 @@ export class MainControl extends Component {
         this.gameOverPanel.active = false;
 
         //Reset angle and position of the bird
-        this.birdControl.node.active = true;
+        // this.birdControl.node.active = true;
+        let blue = find('StoreVolume').getComponent(Store).getBlue()
+        this.node.getChildByName('Bird').active = !blue
+        this.node.getChildByName('Bird').getComponent(BirdControl).node.active = !blue
+        this.node.getChildByName('BlueBird').active = blue.valueOf()
+
+        // let red = find('StoreVolume').getComponent(Store).getBlue()
+        // this.node.getChildByName('Bird').active = !red
+        // this.node.getChildByName('Bird').getComponent(BirdControl).node.active = !red
+        // this.node.getChildByName('RedBird').active = red.valueOf()
+
         this.birdControl.node.setPosition(new Vec3(0,0,0));
         this.birdControl.node.angle = 0;
         
