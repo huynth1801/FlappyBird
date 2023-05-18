@@ -814,7 +814,7 @@
     "_enabled": true,
     "__prefab": null,
     "yellowBird": true,
-    "blueBird": true,
+    "blueBird": false,
     "redBird": false,
     "_id": "80oLpy7FxDDajqYF2CFxnx"
   },

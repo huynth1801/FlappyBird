@@ -10,19 +10,6 @@ export class MenuController extends Component {
     // @property(SoundManager)
     // public soundManager: SoundManager = null;
 
-    @property({
-        type : CCBoolean
-    })
-    private yellowBird
-    @property({
-        type : CCBoolean
-    })
-    private blueBird
-    @property({
-        type : CCBoolean
-    })
-    private redBird
-
     private storeVolume : Store;
 
     onLoad() {
@@ -48,9 +35,6 @@ export class MenuController extends Component {
 
 
     onClickPlayBtn() {
-        this.chooseBlueBird()
-        this.chooseYellowBird()
-        this.chooseRedBird()
         director.loadScene("Main")
     }
 
@@ -75,15 +59,24 @@ export class MenuController extends Component {
 
 
     chooseYellowBird() {
-        // director.addPersistRootNode(this.yellowBird)
+        this.storeVolume.setYellow(true)
+        this.storeVolume.setRed(false)
+        this.storeVolume.setBlue(false)
+        console.log('Chọn chim vàng');
     }
 
     chooseBlueBird() {
-        // director.addPersistRootNode(this.blueBird)
+        this.storeVolume.setBlue(true)
+        this.storeVolume.setRed(false)
+        this.storeVolume.setYellow(false)
+        console.log('Chọn chim xanh');
     }
 
     chooseRedBird() {
-        // director.addPersistRootNode(this.redBird)
+        this.storeVolume.setRed(true)
+        this.storeVolume.setYellow(false)
+        this.storeVolume.setBlue(false)
+        console.log('Chọn chim đỏ');
     }
 }
 

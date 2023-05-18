@@ -42,15 +42,5 @@ export class SoundManager extends Component {
                 break;
         }
     }
-
-    unMute() {
-        this.audioSource.volume = 1
-    }
-
-    mute(){
-        this.audioSource.volume = 0
-    }
-
-
 }
 

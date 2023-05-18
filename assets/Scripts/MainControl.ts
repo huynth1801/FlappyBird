@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Sprite, Vec2, Vec3, Prefab, instantiate, math, director, PhysicsSystem2D, EPhysics2DDrawFlags, Button, Input, Label, sys, Canvas, Animation, animation, find } from 'cc';
+import { _decorator, Component, Node, Sprite, Vec2, Vec3, Prefab, instantiate, math, director, PhysicsSystem2D, EPhysics2DDrawFlags, Button, Input, Label, sys, Canvas, Animation, animation, find, SpriteFrame , resources} from 'cc';
 import { BirdControl } from './BirdControl';
 import { SoundManager, SoundType } from './SoundManager';
 import { MenuController } from './MenuController';
@@ -65,8 +65,38 @@ export class MainControl extends Component {
         let param = find('StoreVolume').getComponent(Store).getValue()
         console.log(param)
         this.soundManager.audioSource.volume = param.valueOf();
+
+        // let yellow = find('StoreVolume').getComponent(Store).getYellow()
+        let blue = find('StoreVolume').getComponent(Store).getBlue()
+        this.node.getChildByName('Bird').active = !blue
+        this.node.getChildByName('BlueBird').active = blue.valueOf()
+        console.log(blue);
+        let red = find('StoreVolume').getComponent(Store).getRed()
+        this.node.getChildByName('Bird').active = !red
+        this.node.getChildByName('RedBird').active = red.valueOf()
+        console.log(red);
+
+
+        // if (blue) {
+        //     this.node.getChildByName('Bird').active = false
+        //     this.node.getChildByName('BlueBird').active = true
+        //     this.node.getChildByName('Bird').getComponent(Animation).play('blueBirdAnim')
+        // } else if (red) {
+        //     this.node.getChildByName('Bird').active = false
+        //     this.node.getChildByName('RedBird').active = true
+        //     this.node.getChildByName('Bird').getComponent(Animation).play('redBirdAnim')
+        //     console.log('run');
+        // }
+
     }
 
+    loadAssests() {
+        // const url = 'test_assets/test_atlas/content/spriteFrame';
+        // resources.load(url, SpriteFrame, (err: any, spriteFrame) => {
+        //   const sprite = this.getComponent(Sprite);
+        //   sprite.spriteFrame = spriteFrame;
+        // });
+    }
 
 
     start() {
