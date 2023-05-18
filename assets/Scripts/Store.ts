@@ -7,14 +7,13 @@ export class Store extends Component {
     @property({
         type: CCInteger
     })
-    private stored = 1
+    private stored: Number = new Number(1)
 
     getValue() {
         return this.stored
     }
 
     setValue(newValue: number) {
-        this.stored = newValue;
+        this.stored = new Number(newValue);
     }
 }
-

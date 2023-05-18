@@ -63,12 +63,8 @@ export class MainControl extends Component {
         // let params = find('StoreVolume')
         // console.log(params.getComponent(Store).stored)
         let param = find('StoreVolume').getComponent(Store).getValue()
-        // console.log(param);
-        if (param == 0) {
-            this.soundManager.audioSource.volume = 0
-        } else {
-            this.soundManager.audioSource.volume = 1
-        }
+        console.log(param)
+        this.soundManager.audioSource.volume = param.valueOf();
     }
 
 
@@ -206,8 +202,6 @@ export class MainControl extends Component {
     }
 
     backToMenu() {
-        let params = find('StoreVolume')
-        director.addPersistRootNode(params)
         director.loadScene('Menu')
     }
 }
