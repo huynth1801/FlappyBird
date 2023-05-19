@@ -13,7 +13,7 @@ export class SoundManager extends Component {
     @property(AudioSource)
     public audioSource: AudioSource = null!
 
-    // Hieu ung am thanh khi con chim bay
+    // Sound effect for bird action
     @property({type: AudioClip})
     private flySound: AudioClip = null;
 

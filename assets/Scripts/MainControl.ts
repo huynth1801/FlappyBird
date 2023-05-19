@@ -237,8 +237,7 @@ export class MainControl extends Component {
         this.maxScore = Math.max(this.localScore, this.curScore)
         sys.localStorage.setItem('Highest score', JSON.stringify(this.maxScore))
         this.node.getChildByName('HighScore').getComponentInChildren(Label).string = this.maxScore.toString();
-
-        this.scoreLabel.node.setPosition(0,-100,0)
+        this.scoreLabel.node.setPosition(0,-90,0)
     }
 
     backToMenu() {
