@@ -28,11 +28,9 @@ export class MenuController extends Component {
             this.storeVolume = find('StoreVolume').getComponent(Store);
         }
 
-        let canvas = director.getScene().getChildByName('Canvas')
         let paramsMain = this.storeVolume.getValue().valueOf();
         this.soundBtn.active = paramsMain === 1;
         this.muteBtn.active = paramsMain !== 1;
-        // canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = paramsMain === 1;
         this.audioSource.getComponent(AudioSource).enabled = paramsMain === 1;
     }
 
@@ -42,7 +40,6 @@ export class MenuController extends Component {
 
     // Click to unmute 1
     onClickSoundOn() {
-        let canvas = director.getScene().getChildByName('Canvas')
         this.soundBtn.active = true
         this.muteBtn.active = false
         this.audioSource.getComponent(AudioSource).enabled = true
@@ -51,7 +48,6 @@ export class MenuController extends Component {
 
     // Click to mute and show mute button 0
     onClickMute() {
-        let canvas = director.getScene().getChildByName('Canvas')
         this.soundBtn.active = false
         this.muteBtn.active = true
         this.audioSource.getComponent(AudioSource).enabled = false
