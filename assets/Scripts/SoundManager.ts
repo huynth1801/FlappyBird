@@ -11,20 +11,20 @@ export enum SoundType {
 @ccclass('SoundManager')
 export class SoundManager extends Component {
     @property(AudioSource)
-     public audioSource: AudioSource = null!
+    public audioSource: AudioSource = null!
 
     // Hieu ung am thanh khi con chim bay
     @property({type: AudioClip})
-    flySound: AudioClip = null;
+    private flySound: AudioClip = null;
 
     @property({type: AudioClip})
-    scoreSound: AudioClip = null;
+    private scoreSound: AudioClip = null;
 
     @property({type: AudioClip})
-    hitSound: AudioClip = null;
+    private hitSound: AudioClip = null;
 
     @property({type: AudioClip})
-    dieSound: AudioClip = null;
+    private dieSound: AudioClip = null;
 
     playSound(soundType: SoundType){
         switch(soundType){
