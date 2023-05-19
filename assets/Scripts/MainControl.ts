@@ -83,7 +83,7 @@ export class MainControl extends Component {
         if (storeVolume.getValue().valueOf() === 1) {
             this.muteBtn.active = true
         } else {
-            this.soundBtn.active = false
+            this.soundBtn.active = true
         }
         if (yellow) {
             this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
