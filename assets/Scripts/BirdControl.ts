@@ -24,11 +24,11 @@ export class BirdControl extends Component {
 
     onBeginContactCollision(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         if(otherCollider.tag === 0){
-            this.mainControl.soundManager.playSound(SoundType.Hit);
+            this.mainControl.getSound().playSound(SoundType.Hit);
             this.mainControl.gameOver();
             this.speed = 0;
         }else if(otherCollider.tag === 1){
-            this.mainControl.soundManager.playSound(SoundType.Score);
+            this.mainControl.getSound().playSound(SoundType.Score);
             this.mainControl.setScore();
         }
     }
@@ -50,7 +50,7 @@ export class BirdControl extends Component {
         switch(event.keyCode){
             case KeyCode.SPACE:
                 this.speed = 2;
-                this.mainControl.soundManager.playSound(SoundType.Fly);
+                this.mainControl.getSound().playSound(SoundType.Fly);
                 break;
         }
     }

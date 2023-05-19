@@ -40,7 +40,7 @@ export class MainControl extends Component {
     private highScore: Node 
 
     @property(SoundManager)
-    public soundManager: SoundManager = null;
+    private soundManager: SoundManager = null;
 
     @property(Node)
     private pauseBtn: Node
@@ -52,26 +52,26 @@ export class MainControl extends Component {
     private curScore: number = 0;
     private maxScore: number = 0;
     private localScore: number = 0;
-    public birdControl : BirdControl = null;
+    private birdControl : BirdControl = null;
+
+    getSound() {
+        return this.soundManager
+    }
 
     onLoad(){
-        this.localScore = parseInt(sys.localStorage.getItem('Highest score'));
+        sys.localStorage.setItem('Highest score', JSON.stringify(this.curScore))
         this.gameOverPanel.active = false;
         this.btnReset.node.on(Input.EventType.TOUCH_END, this.onBtnResetClicked, this);
         this.btnStart.node.on(Input.EventType.TOUCH_END, this.onBtnStartClicked, this);
         this.btnReset.node.active = false;
         this.btnStart.node.active = true;
-        // this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
-        // this.birdControl.node.active = false;
         this.highScore.active = false
-        // this.node.getChildByName('BackToMenu').active = false
         let param = find('StoreVolume').getComponent(Store).getValue()
         this.soundManager.audioSource.volume = param.valueOf();
         var storeVolume = find('StoreVolume').getComponent(Store)
         let yellow = storeVolume.getYellow()
         let blue = storeVolume.getBlue()
         let red = storeVolume.getRed()
-        console.log(this.node.getChildByName('BlueBird').active);
         if (yellow) {
             this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
             this.birdControl.node.active = !yellow;
@@ -231,10 +231,11 @@ export class MainControl extends Component {
 
     showResults() {
         this.highScore.active = true
-        this.maxScore = Math.max(this.localScore, this.curScore)
-        sys.localStorage.setItem('Highest score' , JSON.stringify(this.maxScore))
         this.localScore = parseInt(sys.localStorage.getItem('Highest score'))
+        this.maxScore = Math.max(this.localScore, this.curScore)
+        sys.localStorage.setItem('Highest score', JSON.stringify(this.maxScore))
         this.node.getChildByName('HighScore').getComponentInChildren(Label).string = this.maxScore.toString();
+
         this.scoreLabel.node.setPosition(0,-100,0)
     }
 
