@@ -43,6 +43,12 @@ export class MainControl extends Component {
     @property(SoundManager)
     public soundManager: SoundManager = null;
 
+    @property(Node)
+    private pauseBtn: Node
+
+    @property(Node)
+    private resumeBtn: Node
+
 
     private curScore: number = 0;
     private maxScore: number = 0;
@@ -59,7 +65,7 @@ export class MainControl extends Component {
         // this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
         // this.birdControl.node.active = false;
         this.highScore.active = false
-        this.node.getChildByName('BackToMenu').active = false
+        // this.node.getChildByName('BackToMenu').active = false
         let param = find('StoreVolume').getComponent(Store).getValue()
         this.soundManager.audioSource.volume = param.valueOf();
         var storeVolume = find('StoreVolume').getComponent(Store)
@@ -151,6 +157,8 @@ export class MainControl extends Component {
         this.btnReset.node.active = false;
         this.gameStatus = GameStatus.Playing;
         this.gameOverPanel.active = false;
+        // show pause button
+        this.pauseBtn.active = true
 
         //Reset angle and position of the bird
         // this.birdControl.node.active = true;
@@ -213,6 +221,8 @@ export class MainControl extends Component {
     gameOver(){
         this.gameOverPanel.active = true;
         this.btnReset.node.active = true;
+        this.pauseBtn.active = false
+        this.resumeBtn.active = false
         this.gameStatus = GameStatus.GameOver;
         this.soundManager.playSound(SoundType.Die);
         this.node.getChildByName('BackToMenu').active = true
@@ -230,6 +240,18 @@ export class MainControl extends Component {
 
     backToMenu() {
         director.loadScene('Menu')
+    }
+
+    onClickPause() {
+        director.pause()
+        this.pauseBtn.active = false
+        this.resumeBtn.active = true
+    }
+
+    onClickResume() {
+        director.resume()
+        this.pauseBtn.active = true
+        this.resumeBtn.active = false
     }
 }
 
