@@ -59,7 +59,9 @@ export class MainControl extends Component {
     }
 
     onLoad(){
-        sys.localStorage.setItem('Highest score', JSON.stringify(this.curScore))
+        if (sys.localStorage.getItem('Highest score') === null) {
+            sys.localStorage.setItem('Highest score', JSON.stringify(this.curScore))
+        }
         this.gameOverPanel.active = false;
         this.btnReset.node.on(Input.EventType.TOUCH_END, this.onBtnResetClicked, this);
         this.btnStart.node.on(Input.EventType.TOUCH_END, this.onBtnStartClicked, this);
