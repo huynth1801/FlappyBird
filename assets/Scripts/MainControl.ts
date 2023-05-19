@@ -1,7 +1,6 @@
 import { _decorator, Component, Node, Sprite, Vec2, Vec3, Prefab, instantiate, math, director, PhysicsSystem2D, EPhysics2DDrawFlags, Button, Input, Label, sys, Canvas, Animation, animation, find, SpriteFrame , resources} from 'cc';
 import { BirdControl } from './BirdControl';
 import { SoundManager, SoundType } from './SoundManager';
-import { MenuController } from './MenuController';
 import { Store } from './Store';
 const { ccclass, property } = _decorator;
 
@@ -195,6 +194,7 @@ export class MainControl extends Component {
         this.btnReset.node.active = false;
         this.gameStatus = GameStatus.Playing;
         this.gameOverPanel.active = false;
+        this.pauseBtn.active = true
 
         //Reset map
         this.birdControl.node.setPosition(new Vec3(0,0,0));

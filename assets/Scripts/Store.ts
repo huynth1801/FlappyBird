@@ -1,6 +1,5 @@
 import { _decorator, CCInteger, Component, Node, CCBoolean } from 'cc';
 const { ccclass, property } = _decorator;
-import { MenuController } from './MenuController';
 
 @ccclass('Store')
 export class Store extends Component {

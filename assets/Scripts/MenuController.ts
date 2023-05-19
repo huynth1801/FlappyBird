@@ -1,7 +1,5 @@
 import { _decorator, Component, director, Node, Button, AudioSource, find, CCBoolean} from 'cc';
 const { ccclass, property } = _decorator;
-import { SoundManager } from './SoundManager';
-import { MainControl } from './MainControl';
 import { Store } from './Store';
 
 @ccclass('MenuController')
