@@ -38,7 +38,7 @@ export class MainControl extends Component {
     private scoreLabel: Label = null;
 
     @property(Node)
-    public highScore: Node 
+    private highScore: Node 
 
     @property(SoundManager)
     public soundManager: SoundManager = null;
@@ -56,30 +56,29 @@ export class MainControl extends Component {
         this.btnStart.node.on(Input.EventType.TOUCH_END, this.onBtnStartClicked, this);
         this.btnReset.node.active = false;
         this.btnStart.node.active = true;
-        this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
-        this.birdControl.node.active = false;
+        // this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
+        // this.birdControl.node.active = false;
         this.highScore.active = false
         this.node.getChildByName('BackToMenu').active = false
-        // let params = find('StoreVolume')
-        // console.log(params.getComponent(Store).stored)
         let param = find('StoreVolume').getComponent(Store).getValue()
-        console.log(param)
         this.soundManager.audioSource.volume = param.valueOf();
-
-        let yellow = find('StoreVolume').getComponent(Store).getYellow()
-
-
-
-        let blue = find('StoreVolume').getComponent(Store).getBlue()
-        this.node.getChildByName('Bird').active = !blue
-        // this.node.getChildByName('BlueBird').active = blue.valueOf()
-        this.node.getChildByName('BlueBird').active = !blue
-
-
-        let red = find('StoreVolume').getComponent(Store).getRed()
-        this.node.getChildByName('Bird').active = !red
-        this.node.getChildByName('RedBird').active = red.valueOf()
-        // this.node.getChildByName('RedBird').active = !red
+        var storeVolume = find('StoreVolume').getComponent(Store)
+        let yellow = storeVolume.getYellow()
+        let blue = storeVolume.getBlue()
+        let red = storeVolume.getRed()
+        console.log(this.node.getChildByName('BlueBird').active);
+        if (yellow) {
+            this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
+            this.birdControl.node.active = !yellow;
+        } else if (blue) {
+            this.node.getChildByName('BlueBird').active = blue.valueOf()
+            this.birdControl = this.node.getChildByName('BlueBird').getComponent(BirdControl);
+            this.birdControl.node.active = !blue;
+        } else {
+            this.node.getChildByName('RedBird').active = red.valueOf()
+            this.birdControl = this.node.getChildByName('RedBird').getComponent(BirdControl);
+            this.birdControl.node.active = !red;
+        }
     }
 
 
@@ -155,22 +154,16 @@ export class MainControl extends Component {
 
         //Reset angle and position of the bird
         // this.birdControl.node.active = true;
-        let yellow = find('StoreVolume').getComponent(Store).getYellow()
-        if (yellow) {
-            this.node.getChildByName('Bird').active = true;
-            this.node.getChildByName('Bird').getComponent(BirdControl).node.active = yellow.valueOf()
-        }
-
-        let blue = find('StoreVolume').getComponent(Store).getBlue()
-        this.node.getChildByName('Bird').active = !blue
-        this.node.getChildByName('Bird').getComponent(BirdControl).node.active = !blue
-        this.node.getChildByName('BlueBird').active = blue.valueOf()
-
-        // let red = find('StoreVolume').getComponent(Store).getBlue()
-        // this.node.getChildByName('Bird').active = !red
-        // this.node.getChildByName('Bird').getComponent(BirdControl).node.active = !red
-        // this.node.getChildByName('RedBird').active = red.valueOf()
-
+        let storeVolume = find('StoreVolume').getComponent(Store)
+        let yellow = storeVolume.getYellow()
+        let blue = storeVolume.getBlue()
+        let red = storeVolume.getRed()
+        this.node.getChildByName('Bird').active = yellow.valueOf();
+        this.node.getChildByName('Bird').getComponent(BirdControl).node.active = yellow.valueOf()
+        this.node.getChildByName('BlueBird').active = blue.valueOf();
+        this.node.getChildByName('BlueBird').getComponent(BirdControl).node.active = blue.valueOf()
+        this.node.getChildByName('RedBird').active = red.valueOf();
+        this.node.getChildByName('RedBird').getComponent(BirdControl).node.active = red.valueOf()
         this.birdControl.node.setPosition(new Vec3(0,0,0));
         this.birdControl.node.angle = 0;
         
@@ -198,6 +191,10 @@ export class MainControl extends Component {
         //Reset map
         this.birdControl.node.setPosition(new Vec3(0,0,0));
         this.birdControl.node.angle = 0;
+        this.node.getChildByName('BlueBird').setPosition(new Vec3(0,0,0))
+        this.node.getChildByName('BlueBird').angle = 0
+        this.node.getChildByName('RedBird').setPosition(new Vec3(0,0,0))
+        this.node.getChildByName('RedBird').angle = 0
         for(let i = 0; i < this.arrPipe.length; i++){
             let newPos = this.arrPipe[i].getPosition();
             newPos.x = 170 + 220 * i
@@ -225,8 +222,8 @@ export class MainControl extends Component {
     showResults() {
         this.highScore.active = true
         this.maxScore = Math.max(this.localScore, this.curScore)
-        sys.localStorage.setItem('Highest score' , JSON.stringify(this.maxScore));
-        this.localScore = parseInt(sys.localStorage.getItem('Highest score'));
+        sys.localStorage.setItem('Highest score' , JSON.stringify(this.maxScore))
+        this.localScore = parseInt(sys.localStorage.getItem('Highest score'))
         this.node.getChildByName('HighScore').getComponentInChildren(Label).string = this.maxScore.toString();
         this.scoreLabel.node.setPosition(0,-100,0)
     }
