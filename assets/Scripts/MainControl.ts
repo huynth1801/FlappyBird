@@ -48,6 +48,12 @@ export class MainControl extends Component {
     @property(Node)
     private resumeBtn: Node
 
+    @property(Node)
+    private soundBtn: Node
+
+    @property(Node)
+    private muteBtn: Node
+
 
     private curScore: number = 0;
     private maxScore: number = 0;
@@ -68,12 +74,17 @@ export class MainControl extends Component {
         this.btnReset.node.active = false;
         this.btnStart.node.active = true;
         this.highScore.active = false
-        let param = find('StoreVolume').getComponent(Store).getValue()
-        this.soundManager.audioSource.volume = param.valueOf();
-        var storeVolume = find('StoreVolume').getComponent(Store)
+        // Mute/Unmute from 
+        let storeVolume = find('StoreVolume').getComponent(Store)
+        this.soundManager.audioSource.volume = storeVolume.getValue().valueOf();
         let yellow = storeVolume.getYellow()
         let blue = storeVolume.getBlue()
         let red = storeVolume.getRed()
+        if (storeVolume.getValue().valueOf() === 1) {
+            this.muteBtn.active = true
+        } else {
+            this.soundBtn.active = false
+        }
         if (yellow) {
             this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
             this.birdControl.node.active = !yellow;
@@ -254,6 +265,19 @@ export class MainControl extends Component {
         director.resume()
         this.pauseBtn.active = true
         this.resumeBtn.active = false
+    }
+
+    onClickSoundOn() {
+        this.soundManager.audioSource.volume = 1
+        this.muteBtn.active = true
+        this.soundBtn.active = false
+    }   
+
+    // Click to mute and show mute button 0
+    onClickMute() {
+        this.soundManager.audioSource.volume = 0
+        this.soundBtn.active = true
+        this.muteBtn.active = false
     }
 }
 

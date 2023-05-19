@@ -7,6 +7,15 @@ export class MenuController extends Component {
 
     private storeVolume : Store;
 
+    @property(Node)
+    private soundBtn: Node
+
+    @property(Node)
+    private muteBtn: Node
+
+    @property(Node)
+    private audioSource: AudioSource
+
     onLoad() {
         if (find('StoreVolume') === null)
         {
@@ -21,9 +30,10 @@ export class MenuController extends Component {
 
         let canvas = director.getScene().getChildByName('Canvas')
         let paramsMain = this.storeVolume.getValue().valueOf();
-        canvas.getChildByName('Sound').active = paramsMain === 1;
-        canvas.getChildByName('Mute').active = paramsMain !== 1;
-        canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = paramsMain === 1;
+        this.soundBtn.active = paramsMain === 1;
+        this.muteBtn.active = paramsMain !== 1;
+        // canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = paramsMain === 1;
+        this.audioSource.getComponent(AudioSource).enabled = paramsMain === 1;
     }
 
     onClickPlayBtn() {
@@ -33,18 +43,18 @@ export class MenuController extends Component {
     // Click to unmute 1
     onClickSoundOn() {
         let canvas = director.getScene().getChildByName('Canvas')
-        canvas.getChildByName('Sound').active = true
-        canvas.getChildByName('Mute').active = false
-        canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = true
+        this.soundBtn.active = true
+        this.muteBtn.active = false
+        this.audioSource.getComponent(AudioSource).enabled = true
         this.storeVolume.setValue(1)
     }   
 
     // Click to mute and show mute button 0
     onClickMute() {
         let canvas = director.getScene().getChildByName('Canvas')
-        canvas.getChildByName('Sound').active = false
-        canvas.getChildByName('Mute').active = true
-        canvas.getChildByName('AudioSource').getComponent(AudioSource).enabled = false
+        this.soundBtn.active = false
+        this.muteBtn.active = true
+        this.audioSource.getComponent(AudioSource).enabled = false
         this.storeVolume.setValue(0)
     }
 
