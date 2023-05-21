@@ -80,11 +80,13 @@ export class MainControl extends Component {
         let yellow = storeVolume.getYellow()
         let blue = storeVolume.getBlue()
         let red = storeVolume.getRed()
-        if (storeVolume.getValue().valueOf() === 1) {
-            this.muteBtn.active = true
-        } else {
-            this.soundBtn.active = true
-        }
+        // if (storeVolume.getValue().valueOf() === 1) {
+        //     this.muteBtn.active = true
+        // } else {
+        //     this.soundBtn.active = true
+        // }
+        this.muteBtn.active = storeVolume.getValue().valueOf() === 1
+        this.soundBtn.active = storeVolume.getValue().valueOf() !== 1
         if (yellow) {
             this.birdControl = this.node.getChildByName('Bird').getComponent(BirdControl);
             this.birdControl.node.active = !yellow;
