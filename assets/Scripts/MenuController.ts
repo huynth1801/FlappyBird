@@ -1,4 +1,4 @@
-import { _decorator, Component, director, Node, Button, AudioSource, find, CCBoolean} from 'cc';
+import { _decorator, Component, director, Node, Button, AudioSource, find, CCBoolean, Label} from 'cc';
 const { ccclass, property } = _decorator;
 import { Store } from './Store';
 
@@ -15,6 +15,9 @@ export class MenuController extends Component {
 
     @property(Node)
     private audioSource: AudioSource
+
+    @property(Node)
+    private showText: Node
 
     onLoad() {
         if (find('StoreVolume') === null)
@@ -35,23 +38,23 @@ export class MenuController extends Component {
     }
 
     onClickPlayBtn() {
-        director.loadScene("Main")
+        director.loadScene("Main");
     }
 
     // Click to unmute 1
     onClickSoundOn() {
-        this.soundBtn.active = true
-        this.muteBtn.active = false
-        this.audioSource.getComponent(AudioSource).enabled = true
-        this.storeVolume.setValue(1)
+        this.soundBtn.active = true;
+        this.muteBtn.active = false;
+        this.audioSource.getComponent(AudioSource).enabled = true;
+        this.storeVolume.setValue(1);
     }   
 
     // Click to mute and show mute button 0
     onClickMute() {
-        this.soundBtn.active = false
-        this.muteBtn.active = true
-        this.audioSource.getComponent(AudioSource).enabled = false
-        this.storeVolume.setValue(0)
+        this.soundBtn.active = false;
+        this.muteBtn.active = true;
+        this.audioSource.getComponent(AudioSource).enabled = false;
+        this.storeVolume.setValue(0);
     }
 
 
@@ -59,18 +62,28 @@ export class MenuController extends Component {
         this.storeVolume.setYellow(true)
         this.storeVolume.setRed(false)
         this.storeVolume.setBlue(false)
+        this.startPopUp('Chosen yellow bird!')
     }
 
     chooseBlueBird() {
-        this.storeVolume.setBlue(true)
-        this.storeVolume.setRed(false)
-        this.storeVolume.setYellow(false)
+        this.storeVolume.setBlue(true);
+        this.storeVolume.setRed(false);
+        this.storeVolume.setYellow(false);
+        this.startPopUp('Chosen blue bird!');
     }
 
     chooseRedBird() {
-        this.storeVolume.setRed(true)
-        this.storeVolume.setYellow(false)
-        this.storeVolume.setBlue(false)
+        this.storeVolume.setRed(true);
+        this.storeVolume.setYellow(false);
+        this.storeVolume.setBlue(false);
+        this.startPopUp('Chosen red bird!');
+    }
+
+    startPopUp(text: string) {
+        this.scheduleOnce(() => {
+            this.showText.active = true;
+            this.showText.getComponent(Label).string = text.toString();
+        }, 0);
     }
 }
 
