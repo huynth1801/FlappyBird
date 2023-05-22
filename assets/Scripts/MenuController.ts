@@ -80,10 +80,8 @@ export class MenuController extends Component {
     }
 
     startPopUp(text: string) {
-        this.scheduleOnce(() => {
-            this.showText.active = true;
-            this.showText.getComponent(Label).string = text.toString();
-        }, 0);
+        this.showText.active = true;
+        this.showText.getComponent(Label).string = text.toString();
     }
 }
 
