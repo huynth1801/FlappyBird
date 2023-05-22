@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3, find, Event, EventTouch, EventKeyboard, input, Input, KeyCode, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D } from 'cc';
+import { _decorator, Component, Node, Vec3, find, Event, EventTouch, EventKeyboard, input, Input, KeyCode, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, EventMouse, Button } from 'cc';
 import { SoundType } from './SoundManager';
 import { GameStatus, MainControl } from './MainControl';
 const { ccclass, property } = _decorator;
@@ -12,7 +12,7 @@ export class BirdControl extends Component {
     private mainControl: MainControl = null;
 
     onLoad(){
-        input.on(Input.EventType.KEY_DOWN, this.onKeyBoardUp, this);
+        input.on(Input.EventType.MOUSE_DOWN, this.onClickUp, this);
     }
 
     start(){
@@ -52,6 +52,15 @@ export class BirdControl extends Component {
                 this.speed = 2;
                 this.mainControl.getSound().playSound(SoundType.Fly);
                 break;
+        }
+    }
+
+    onClickUp(event: EventMouse) {
+        switch(event.getButton()) {
+            case(EventMouse.BUTTON_LEFT):
+            this.speed = 2;
+            this.mainControl.getSound().playSound(SoundType.Fly);
+            break;
         }
     }
 }
