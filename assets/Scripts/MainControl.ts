@@ -280,7 +280,7 @@ export class MainControl extends Component {
         for (let i = 0; i < this.arrPipe.length; i++) {
             let newPos = this.arrPipe[i].getPosition();
             newPos.x -= this.gameSpeed * deltaTime;
-            if (newPos.x <= -170) {
+            if (newPos.x <= -200) {
                 newPos.x = 430;
                 newPos.y = MIN_Y + Math.random() * (MAX_Y - MIN_Y);
             }
