@@ -8,21 +8,23 @@ export class BirdControl extends Component {
 
     private speed:number = 0;
 
-    @property(MainControl)
+    @property({
+        type: MainControl
+    })
     private mainControl: MainControl = null;
 
-    onLoad(){
+    protected onLoad(): void {
         input.on(Input.EventType.MOUSE_DOWN, this.onClickUp, this);
     }
 
-    start(){
+    protected start(): void{
         let collider = this.getComponent(Collider2D);
         if(collider){
             collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContactCollision, this);
         }
     }
 
-    onBeginContactCollision(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
+    protected onBeginContactCollision(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null): void {
         if(otherCollider.tag === 0){
             this.mainControl.getSound().playSound(SoundType.Hit);
             this.mainControl.gameOver();
@@ -33,34 +35,23 @@ export class BirdControl extends Component {
         }
     }
 
-    update(deltaTime: number) {
+    protected update(): void {
         if(this.mainControl.gameStatus != GameStatus.Playing)
             return;
 
         this.speed -= 0.05;
         this.node.setPosition(new Vec3(0, this.node.getPosition().y + this.speed, 0));
-        var angle = -(this.speed/2)*30;
+        let angle = -(this.speed/2)*30;
         if(angle>=30){
             angle = 30;
         }
         this.node.angle = -angle;
     }
 
-    onKeyBoardUp(event: EventKeyboard){
-        switch(event.keyCode){
-            case KeyCode.SPACE:
-                this.speed = 2;
-                this.mainControl.getSound().playSound(SoundType.Fly);
-                break;
-        }
-    }
-
-    onClickUp(event: EventMouse) {
-        switch(event.getButton()) {
-            case(EventMouse.BUTTON_LEFT):
+    private onClickUp(event: EventMouse): void {
+        if(event.getButton() === EventMouse.BUTTON_LEFT) {
             this.speed = 2;
             this.mainControl.getSound().playSound(SoundType.Fly);
-            break;
         }
     }
 }

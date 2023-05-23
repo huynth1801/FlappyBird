@@ -1,6 +1,12 @@
 import { _decorator, CCInteger, Component, Node, CCBoolean } from "cc";
 const { ccclass, property } = _decorator;
 
+enum BirdType {
+  Yellow,
+  Blue,
+  Red,
+}
+
 @ccclass("Store")
 export class Store extends Component {
   @property({
@@ -11,45 +17,21 @@ export class Store extends Component {
   @property({
     type: CCBoolean,
   })
-  private yellowBird: Boolean = true;
-  @property({
-    type: CCBoolean,
-  })
-  private blueBird: Boolean = false;
-  @property({
-    type: CCBoolean,
-  })
-  private redBird: Boolean = false;
+  private birdTypes: Boolean[] = [true, false, false];
 
-  getValue() {
+  public getValue() {
     return this.stored;
   }
 
-  setValue(newValue: number) {
+  public setValue(newValue: number) {
     this.stored = new Number(newValue);
   }
 
-  getYellow() {
-    return this.yellowBird;
+  public getBirdType(type: BirdType): Boolean {
+    return this.birdTypes[type];
   }
 
-  setYellow(yellow: boolean) {
-    this.yellowBird = new Boolean(yellow);
-  }
-
-  getRed() {
-    return this.redBird;
-  }
-
-  setRed(red: boolean) {
-    this.redBird = new Boolean(red);
-  }
-
-  getBlue() {
-    return this.blueBird;
-  }
-
-  setBlue(blue: boolean) {
-    this.blueBird = new Boolean(blue);
+  public setBirdType(type: BirdType, value: Boolean): void {
+    this.birdTypes[type] = new Boolean(value);
   }
 }

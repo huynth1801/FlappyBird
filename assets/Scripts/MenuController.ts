@@ -2,24 +2,38 @@ import { _decorator, Component, director, Node, Button, AudioSource, find, CCBoo
 const { ccclass, property } = _decorator;
 import { Store } from './Store';
 
+enum BirdType {
+    Yellow,
+    Blue,
+    Red,
+}
+
 @ccclass('MenuController')
 export class MenuController extends Component {
 
     private storeVolume : Store;
 
-    @property(Node)
+    @property({
+        type: Node
+    })
     private soundBtn: Node
 
-    @property(Node)
+    @property({
+        type: Node
+    })
     private muteBtn: Node
 
-    @property(Node)
+    @property({
+        type: Node
+    })
     private audioSource: AudioSource
 
-    @property(Node)
-    private showText: Node
+    @property({
+        type: Label
+    })
+    private showText: Label
 
-    onLoad() {
+    protected onLoad(): void {
         if (find('StoreVolume') === null)
         {
             const storeVolumeNode = new Node('StoreVolume');
@@ -37,51 +51,53 @@ export class MenuController extends Component {
         this.audioSource.getComponent(AudioSource).enabled = paramsMain === 1;
     }
 
-    onClickPlayBtn() {
+    private onClickPlayBtn(): void {
         director.loadScene("Main");
     }
 
     // Click to unmute 1
-    onClickSoundOn() {
-        this.soundBtn.active = true;
-        this.muteBtn.active = false;
-        this.audioSource.getComponent(AudioSource).enabled = true;
-        this.storeVolume.setValue(1);
-    }   
+    private onClickSoundOn(): void {
+        this.setSoundState(true);
+    }
 
-    // Click to mute and show mute button 0
-    onClickMute() {
-        this.soundBtn.active = false;
-        this.muteBtn.active = true;
-        this.audioSource.getComponent(AudioSource).enabled = false;
-        this.storeVolume.setValue(0);
+    private onClickMute(): void {
+        this.setSoundState(false);
+    }
+
+    private setSoundState(isSoundOn: boolean): void {
+        this.soundBtn.active = isSoundOn;
+        this.muteBtn.active = !isSoundOn;
+        this.audioSource.getComponent(AudioSource).enabled = isSoundOn;
+        this.storeVolume.setValue(isSoundOn ? 1 : 0);
     }
 
 
-    chooseYellowBird() {
-        this.storeVolume.setYellow(true)
-        this.storeVolume.setRed(false)
-        this.storeVolume.setBlue(false)
-        this.startPopUp('Chosen yellow bird!')
+    private chooseBirdType(type: BirdType, message: string): void {
+        this.storeVolume.setBirdType(type, true);
+
+        for (let i = 0; i < Object.keys(BirdType).length / 2; i++) {
+            if (i !== type) {
+                this.storeVolume.setBirdType(i, false);
+            }
+        }
+
+        this.startPopUp(message);
     }
 
-    chooseBlueBird() {
-        this.storeVolume.setBlue(true);
-        this.storeVolume.setRed(false);
-        this.storeVolume.setYellow(false);
-        this.startPopUp('Chosen blue bird!');
+    private chooseYellowBird(): void {
+        this.chooseBirdType(BirdType.Yellow, 'Chosen yellow bird!');
     }
 
-    chooseRedBird() {
-        this.storeVolume.setRed(true);
-        this.storeVolume.setYellow(false);
-        this.storeVolume.setBlue(false);
-        this.startPopUp('Chosen red bird!');
+    private chooseBlueBird(): void {
+        this.chooseBirdType(BirdType.Blue, 'Chosen blue bird!');
     }
 
-    startPopUp(text: string) {
-        this.showText.active = true;
-        this.showText.getComponent(Label).string = text.toString();
+    private chooseRedBird(): void {
+        this.chooseBirdType(BirdType.Red, 'Chosen red bird!');
+    }
+
+    private startPopUp(text: string): void {
+        this.showText.string = text.toString();
     }
 }
 

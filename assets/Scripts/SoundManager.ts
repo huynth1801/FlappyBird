@@ -10,8 +10,10 @@ export enum SoundType {
 
 @ccclass("SoundManager")
 export class SoundManager extends Component {
-  @property(AudioSource)
-  public audioSource: AudioSource = null!;
+  @property({
+    type: AudioSource
+})
+  public audioSource: AudioSource = null;
 
   // Sound effect for bird action
   @property({ type: AudioClip })
@@ -26,20 +28,15 @@ export class SoundManager extends Component {
   @property({ type: AudioClip })
   private dieSound: AudioClip = null;
 
-  playSound(soundType: SoundType) {
-    switch (soundType) {
-      case SoundType.Fly:
-        this.audioSource.playOneShot(this.flySound, 1);
-        break;
-      case SoundType.Score:
-        this.audioSource.playOneShot(this.scoreSound, 1);
-        break;
-      case SoundType.Die:
-        this.audioSource.playOneShot(this.dieSound, 1);
-        break;
-      case SoundType.Hit:
-        this.audioSource.playOneShot(this.hitSound, 1);
-        break;
+  public playSound(soundType: SoundType): void {
+    if (soundType === SoundType.Fly) {
+      this.audioSource.playOneShot(this.flySound, 1);
+    } else if (soundType === SoundType.Score) {
+      this.audioSource.playOneShot(this.scoreSound, 1);
+    } else if (soundType === SoundType.Die) {
+      this.audioSource.playOneShot(this.dieSound, 1);
+    } else {
+      this.audioSource.playOneShot(this.hitSound, 1);
     }
   }
 }
