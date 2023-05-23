@@ -16,22 +16,22 @@ export class MenuController extends Component {
     @property({
         type: Node
     })
-    private soundBtn: Node
+    private soundBtn: Node;
 
     @property({
         type: Node
     })
-    private muteBtn: Node
+    private muteBtn: Node;
 
     @property({
         type: Node
     })
-    private audioSource: AudioSource
+    private audioSource: AudioSource;
 
     @property({
         type: Label
     })
-    private showText: Label
+    private showText: Label;
 
     protected onLoad(): void {
         if (find('StoreVolume') === null)
@@ -70,7 +70,6 @@ export class MenuController extends Component {
         this.audioSource.getComponent(AudioSource).enabled = isSoundOn;
         this.storeVolume.setValue(isSoundOn ? 1 : 0);
     }
-
 
     private chooseBirdType(type: BirdType, message: string): void {
         this.storeVolume.setBirdType(type, true);

@@ -69,12 +69,12 @@ export class MainControl extends Component {
     @property({
         type: Node
     })
-    private highScore: Node 
+    private highScore: Node ;
 
     @property({
         type: Label
     })
-    private highScoreStr: Label
+    private highScoreStr: Label;
 
     @property({
         type: SoundManager
@@ -84,37 +84,37 @@ export class MainControl extends Component {
     @property({
         type: Node
     })
-    private pauseBtn: Node
+    private pauseBtn: Node;
 
     @property({
         type: Node
     })
-    private resumeBtn: Node
+    private resumeBtn: Node;
 
     @property({
         type: Node
     })
-    private soundBtn: Node
+    private soundBtn: Node;
 
     @property({
         type: Node
     })
-    private muteBtn: Node
+    private muteBtn: Node;
 
     @property({
         type: Node
     })
-    private yellowBird: Node
+    private yellowBird: Node;
 
     @property({
         type: Node
     })
-    private blueBird: Node
+    private blueBird: Node;
 
     @property({
         type: Node
     })
-    private redBird: Node
+    private redBird: Node;
     
     private curScore: number = 0;
     private maxScore: number = 0;
@@ -125,7 +125,7 @@ export class MainControl extends Component {
     public gameStatus: GameStatus = GameStatus.Ready;
 
     public getSound() {
-        return this.soundManager
+        return this.soundManager;
     }
 
     protected onLoad(): void {
@@ -139,16 +139,16 @@ export class MainControl extends Component {
             this.arrPipe[i].setPosition(new Vec3(xPipe, yPipe, 0));
         }
         if (!sys.localStorage.getItem(highestScoreKey)) {
-            sys.localStorage.setItem(highestScoreKey, this.curScore.toString())
+            sys.localStorage.setItem(highestScoreKey, this.curScore.toString());
         }
         this.gameOverPanel.active = false;
         this.btnReset.node.on(Input.EventType.TOUCH_END, this.onBtnResetClicked, this);
         this.btnStart.node.on(Input.EventType.TOUCH_END, this.onBtnStartClicked, this);
         this.btnReset.node.active = false;
         this.btnStart.node.active = true;
-        this.highScore.active = false
+        this.highScore.active = false;
         // Mute/Unmute from 
-        let storeVolume = find('StoreVolume').getComponent(Store)
+        let storeVolume = find('StoreVolume').getComponent(Store);
         this.soundManager.audioSource.volume = storeVolume.getValue().valueOf();
         // Get the Boolean value when choose bird
         let birdType = BirdType.Yellow;
@@ -161,7 +161,6 @@ export class MainControl extends Component {
         }
         this.muteBtn.active = storeVolume.getValue().valueOf() === 1;
         this.soundBtn.active = !this.muteBtn.active;
-
         this.birdControl = this.getBirdControlComponent(birdType);
     }
 
@@ -171,12 +170,12 @@ export class MainControl extends Component {
             return;
 
         // move the background node
-        this.moveBackgroundNodes(deltaTime)
+        this.moveBackgroundNodes(deltaTime);
         // move the ground node
-        this.moveGroundNodes(deltaTime)
+        this.moveGroundNodes(deltaTime);
         // move the pipe node
-        this.movePipeNodes(deltaTime)
-        this.highScore.active = false
+        this.movePipeNodes(deltaTime);
+        this.highScore.active = false;
     }
 
     public setScore(): void {
@@ -214,13 +213,13 @@ export class MainControl extends Component {
         this.gameStatus = GameStatus.Playing;
         this.gameOverPanel.active = false;
         // show pause button
-        this.pauseBtn.active = true
+        this.pauseBtn.active = true;
 
         //Reset angle and position of the bird
-        let storeVolume = find('StoreVolume').getComponent(Store)
-        let yellow = storeVolume.getBirdType(BirdType.Yellow)
-        let blue = storeVolume.getBirdType(BirdType.Blue)
-        let red = storeVolume.getBirdType(BirdType.Red)
+        let storeVolume = find('StoreVolume').getComponent(Store);
+        let yellow = storeVolume.getBirdType(BirdType.Yellow);
+        let blue = storeVolume.getBirdType(BirdType.Blue);
+        let red = storeVolume.getBirdType(BirdType.Red);
         this.yellowBird.active = yellow.valueOf();
         this.blueBird.active = blue.valueOf();
         this.redBird.active = red.valueOf();
@@ -239,7 +238,7 @@ export class MainControl extends Component {
         this.btnReset.node.active = false;
         this.gameStatus = GameStatus.Playing;
         this.gameOverPanel.active = false;
-        this.pauseBtn.active = true
+        this.pauseBtn.active = true;
 
         //Reset map
         let storeVolume = find('StoreVolume').getComponent(Store);
@@ -251,7 +250,7 @@ export class MainControl extends Component {
         //Score
         this.curScore = 0;
         this.scoreLabel.string = this.curScore.toString();
-        this.scoreLabel.node.setPosition(SCORE_POS_START)
+        this.scoreLabel.node.setPosition(SCORE_POS_START);
     }
 
     private moveBackgroundNodes(deltaTime: number): void {
@@ -308,49 +307,49 @@ export class MainControl extends Component {
     public gameOver(): void {
         this.gameOverPanel.active = true;
         this.btnReset.node.active = true;
-        this.pauseBtn.active = false
-        this.resumeBtn.active = false
+        this.pauseBtn.active = false;
+        this.resumeBtn.active = false;
         this.gameStatus = GameStatus.GameOver;
         this.soundManager.playSound(SoundType.Die);
-        this.showResults()
+        this.showResults();
     }
 
     private showResults(): void {
-        this.highScore.active = true
-        this.localScore = parseInt(sys.localStorage.getItem(highestScoreKey))
-        this.maxScore = Math.max(this.localScore, this.curScore)
-        sys.localStorage.setItem(highestScoreKey, this.maxScore.toString())
+        this.highScore.active = true;
+        this.localScore = parseInt(sys.localStorage.getItem(highestScoreKey));
+        this.maxScore = Math.max(this.localScore, this.curScore);
+        sys.localStorage.setItem(highestScoreKey, this.maxScore.toString());
         this.highScoreStr.string = this.maxScore.toString();
-        this.scoreLabel.node.setPosition(SCORE_POS_GAME_OVER)
+        this.scoreLabel.node.setPosition(SCORE_POS_GAME_OVER);
     }
 
     private backToMenu(): void {
-        director.loadScene('Menu')
+        director.loadScene('Menu');
     }
 
     private onClickPause(): void {
-        director.pause()
-        this.pauseBtn.active = false
-        this.resumeBtn.active = true
+        director.pause();
+        this.pauseBtn.active = false;
+        this.resumeBtn.active = true;
     }
 
     private onClickResume(): void {
-        director.resume()
-        this.pauseBtn.active = true
-        this.resumeBtn.active = false
+        director.resume();
+        this.pauseBtn.active = true;
+        this.resumeBtn.active = false;
     }
 
     private onClickSoundOn(): void {
-        this.soundManager.audioSource.volume = 1
-        this.muteBtn.active = true
-        this.soundBtn.active = false
+        this.soundManager.audioSource.volume = 1;
+        this.muteBtn.active = true;
+        this.soundBtn.active = false;
     }   
 
     // Click to mute and show mute button 0
     private onClickMute(): void {
-        this.soundManager.audioSource.volume = 0
-        this.soundBtn.active = true
-        this.muteBtn.active = false
+        this.soundManager.audioSource.volume = 0;
+        this.soundBtn.active = true;
+        this.muteBtn.active = false;
     }
 }
 
